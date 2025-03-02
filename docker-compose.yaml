@@ -1,0 +1,10 @@
+services:
+  whisper_backend:
+    container_name: whisper_backend2
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.cpu
+    ports:
+      - 8000:8000
+    command: [ "python", "client.py" ]

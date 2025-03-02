@@ -1,3 +1,12 @@
 Cython
 dtw-python
 openai-whisper
+matplotlib==3.7.4
+transformers
+onnxruntime
+
+fastapi==0.109.1
+uvicorn==0.22.0
+aiofiles==23.1.0
+python-multipart
+PyYAML

@@ -1,3 +1,22 @@
+# How to run fastapi client
+
+There are 2 ways to run Docker: with `docker` or `docker compose`.
+
+I also add `config.yaml` file to choose whisper model and devices   
+
+> Don't forget to specify correct Dockerfile (for local testing with cpu use `Dockerfile.cpu`)
+
+Script to run with `docker`:
+```
+
+```
+
+Script to run with `docker-compose`:
+```
+docker compose up --build
+```
+
+
 # whisper-timestamped
 
 Multilingual Automatic Speech Recognition with word-level timestamps and confidence.

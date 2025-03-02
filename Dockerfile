@@ -14,8 +14,7 @@ COPY requirements.txt /usr/src/app/requirements.txt
 RUN cd /usr/src/app/ && pip3 install -r requirements.txt
 
 # Copy source
-COPY setup.py /usr/src/app/setup.py
-COPY whisper_timestamped /usr/src/app/whisper_timestamped
+COPY . /usr/src/app/
 
 # Install
 RUN cd /usr/src/app/ && pip3 install ".[dev]"
@@ -23,10 +22,4 @@ RUN cd /usr/src/app/ && pip3 install ".[vad_silero]"
 RUN cd /usr/src/app/ && pip3 install ".[vad_auditok]"
 RUN cd /usr/src/app/ && pip3 install ".[test]"
 
-# Cleanup
-RUN rm -R /usr/src/app/requirements.txt /usr/src/app/setup.py /usr/src/app/whisper_timestamped
-
-# Copy tests
-COPY tests /usr/src/app/tests
-
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["python", "client.py"]
