@@ -16,10 +16,4 @@ RUN cd /usr/src/app/ && pip3 install -r requirements.txt
 # Copy source
 COPY . /usr/src/app/
 
-# Install
-RUN cd /usr/src/app/ && pip3 install ".[dev]"
-RUN cd /usr/src/app/ && pip3 install ".[vad_silero]"
-RUN cd /usr/src/app/ && pip3 install ".[vad_auditok]"
-RUN cd /usr/src/app/ && pip3 install ".[test]"
-
 ENTRYPOINT ["python", "client.py"]
