@@ -14,7 +14,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 import whisper_timestamped
 
 path = "files/test.wav"
-model = whisper_timestamped.load_model(cfg['model'], device=cfg['device'])
+model = whisper_timestamped.load_model(cfg['model'], device=cfg['device'], download_root='.cache')
 
 
 async def process_audio(audio_path: str):
@@ -42,4 +42,4 @@ async def transcribe(file: UploadFile = File(...)):
 
 
 if __name__ == "__main__":
-    uvicorn.run("client:app", host="0.0.0.0", port=8000, workers=3)
+    uvicorn.run("client:app", host="0.0.0.0", port=8000, workers=1)
