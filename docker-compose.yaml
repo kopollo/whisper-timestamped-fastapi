@@ -8,5 +8,5 @@ services:
     volumes:
       - ./setup_config/test_cpu_config.yaml:/usr/src/app/config.yaml
     ports:
-      - 8000:8000
+      - 9000:9000
     command: [ "python", "client.py" ]
