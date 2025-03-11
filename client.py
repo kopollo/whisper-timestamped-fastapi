@@ -22,10 +22,10 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 
-async def process_audio(audio_path: str):
+async def process_audio(audio_path: str, language):
     try:
         audio = whisper_timestamped.load_audio(audio_path)
-        result = whisper_timestamped.transcribe(model, audio)
+        result = whisper_timestamped.transcribe(model, audio, language=language)
         print(result)
     finally:
         os.remove(audio_path)  # Удаляем временный файл после обработки
@@ -33,14 +33,14 @@ async def process_audio(audio_path: str):
 
 
 @app.post("/transcribe")
-async def transcribe(file: UploadFile = File(...)):
+async def transcribe(file: UploadFile = File(...), language="en"):
     try:
         file_path = os.path.join(UPLOAD_DIR, file.filename)
         logger.info(f"Try to load file: {file_path}")
         with open(file_path, "wb") as f:
             f.write(await file.read())
 
-        result = await process_audio(file_path)
+        result = await process_audio(file_path, language)
         return JSONResponse(content=result)
     except Exception as e:
         logger.error("An error occurred: %s", traceback.format_exc())
