@@ -1,2 +1,2 @@
-model: "small"
+model: "medium"
 device: "cuda:0"
