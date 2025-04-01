@@ -1,32 +1,29 @@
 import os
+import traceback
 
 import uvicorn
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 
 from config import cfg
+import whisper_timestamped
+from logging_config import init_logger
 
 app = FastAPI()
 
 UPLOAD_DIR = "upload/audio"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-import whisper_timestamped
-
 model = whisper_timestamped.load_model(cfg['model'], device=cfg['device'], download_root='.cache')
 
-import logging
-import traceback
-
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = init_logger(__name__)
 
 
 async def process_audio(audio_path: str, language):
     try:
         audio = whisper_timestamped.load_audio(audio_path)
         result = whisper_timestamped.transcribe(model, audio, language=language)
-        print(result)
+        logger.info(result)
     finally:
         os.remove(audio_path)  # Удаляем временный файл после обработки
     return result
@@ -34,6 +31,7 @@ async def process_audio(audio_path: str, language):
 
 @app.post("/transcribe")
 async def transcribe(file: UploadFile = File(...), language="en"):
+    logger.info(f"Got request! lang: {language}")
     try:
         file_path = os.path.join(UPLOAD_DIR, file.filename)
         logger.info(f"Try to load file: {file_path}")
