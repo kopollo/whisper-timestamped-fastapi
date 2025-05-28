@@ -30,7 +30,7 @@ async def process_audio(audio_path: str, language):
 
 
 @app.post("/transcribe")
-async def transcribe(file: UploadFile = File(...), language="en"):
+async def transcribe(file: UploadFile = File(...), language=None):
     logger.info(f"Got request! lang: {language}")
     try:
         file_path = os.path.join(UPLOAD_DIR, file.filename)
